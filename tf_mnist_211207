@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Dec  7 14:04:47 2021
+
+decoding_handwriting, tensorflow exercise
+
+@author: JM_SEOL
+"""
+
+import tensorflow as tf
+import matplotlib.pyplot as plt
+
+
+(x_tr, y_tr), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+plt.imshow(x_tr[0], cmap = plt.cm.gray_r,interpolation='nearest')
+
+#%% data preparation
+
+(x_tr, x_test) = (x_tr/255, x_test/255)
+
+y_tr = tf.keras.utils.to_categorical(y_tr,10)
+y_test = tf.keras.utils.to_categorical(y_test,10)
+
+#%% model construction
+
+mdl = tf.keras.Sequential()
+
+mdl.add(tf.keras.layers.Dense(units=10,input_dim=784,activation='softmax'))
+mdl.compile(loss='categorical_crossentropy', optimizer=tf.optimizers.Adam(lr=0.01), metrics=['accuracy'])
+mdl.summary()
+
+mdl.fit(x_tr,y_tr,batch_size=100,epochs=10,validation_data = (x_test,y_test))
+# ValueError: Input 0 of layer "sequential_2" is incompatible with the layer: expected shape=(None, 784), found shape=(100, 28, 28
