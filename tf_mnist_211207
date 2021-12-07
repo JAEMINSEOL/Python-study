@@ -17,6 +17,8 @@ plt.imshow(x_tr[0], cmap = plt.cm.gray_r,interpolation='nearest')
 #%% data preparation
 
 (x_tr, x_test) = (x_tr/255, x_test/255)
+x_tr = x_tr.reshape(60000,784)
+x_test=x_test.reshape(10000,784)
 
 y_tr = tf.keras.utils.to_categorical(y_tr,10)
 y_test = tf.keras.utils.to_categorical(y_test,10)
@@ -29,5 +31,9 @@ mdl.add(tf.keras.layers.Dense(units=10,input_dim=784,activation='softmax'))
 mdl.compile(loss='categorical_crossentropy', optimizer=tf.optimizers.Adam(lr=0.01), metrics=['accuracy'])
 mdl.summary()
 
-mdl.fit(x_tr,y_tr,batch_size=100,epochs=10,validation_data = (x_test,y_test))
-# ValueError: Input 0 of layer "sequential_2" is incompatible with the layer: expected shape=(None, 784), found shape=(100, 28, 28
+#%% model fit
+
+mdl.fit(x_tr,y_tr,batch_size=100,epochs=20,validation_data = (x_test,y_test))
+
+test_loss,test_acc = mdl.evaluate(x_test,y_test)
+
