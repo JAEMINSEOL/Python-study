@@ -148,30 +148,3 @@ for house in house_list:
     house.show_detail()
 
 #%%
-class BigNumberError(Exception):
-    def __init__(self,msg):
-        self.msg = msg
-    def __str__(self):
-        return self.msg
-def cal_divide():
-    try:
-        num1 = int(input('first num: '))
-        num2 = int(input('second num: '))
-        if num1>=10 or num2>=10:
-            raise BigNumberError(f'Input: {num1}, {num2}')
-        print(f'{num1} / {num2} = {num1/num2}')
-    except ValueError:
-        print('Error! wrong input value')
-    except ZeroDivisionError as err:
-        print(err)
-    except BigNumberError as err:
-        print('Big number error')
-        print(err)
-    except Exception as err:
-        print('Unknown error')
-        print(err)
-    finally:
-        print('Thank for using calculator')
-
-cal_divide()
-#%%
